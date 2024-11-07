@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    function handleSubmit(event) {
+      event.preventDefault();  // Mencegah form melakukan submit biasa
+
+      var formData = new FormData(event.target);
+      var data = {};
+      formData.forEach(function(value, key) {
+        data[key] = value;
+      });
+
+      // Mengirim data ke Apps Script
+      var url = 'https://script.google.com/macros/s/AKfycbzzXGMRfNZYaJPqkK4x6Y1nQcsyi6KLz8cWDKoNjj0PrgwFRkxboJE6aU4dkZd1Aim7Tw/exec';  // Ganti dengan URL deploy Apps Script Anda
+      var options = {
+        method: 'POST',
+        contentType: 'application/x-www-form-urlencoded',
+        payload: data
+      };
+
+      // Melakukan request ke backend
+      fetch(url, options)
+        .then(response => response.json())
+        .then(responseData => {
+          if (responseData.result === 'success') {
+            alert('Berhasil! Data telah ditambahkan.');
+            // Menyembunyikan form atau reset ke form semula
+            document.getElementById('myForm').reset();
+          } else {
+            alert('Terjadi kesalahan: ' + responseData.error);
+          }
+        })
+        .catch(error => {
+          alert('Error: ' + error.message);
+        });
+    }
+  </script>
+</head>
+<body>
+  <h1>Formulir Pengisian Data</h1>
+  
+  <form id="myForm" onsubmit="handleSubmit(event)">
+    <label for="Nama">Nama:</label>
+    <input type="text" name="Nama" id="Nama" required><br><br>
+    
+    <label for="Email">Email:</label>
+    <input type="email" name="Email" id="Email" required><br><br>
+
+    <label for="Tanggal">Tanggal:</label>
+    <input type="date" name="Tanggal" id="Tanggal"><br><br>
+    
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>
