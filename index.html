@@ -72,9 +72,7 @@ background: linear-gradient(135deg, rgba(0,50,126,1) 0%, rgba(118,64,255,1) 100%
                 <div class="mb-5 text-center">
                     <h4>ABSENSI DEWAN AMBALAN ESEMKASA</h4>
                 </div>
-                <form
-                    action="https://script.google.com/macros/s/AKfycbzzXGMRfNZYaJPqkK4x6Y1nQcsyi6KLz8cWDKoNjj0PrgwFRkxboJE6aU4dkZd1Aim7Tw/exec"
-                    method="POST">
+                <form onsubmit="handleSubmit(event)" method="POST">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInputNamaLengkap" placeholder="Nama Lengkap"
                             name="Nama Lengkap">
