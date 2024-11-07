@@ -22,6 +22,42 @@
             -moz-appearance: textfield;
         }
     </style>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();  // Mencegah form melakukan submit biasa
+
+            var formData = new FormData(event.target);
+            var data = {};
+            formData.forEach(function (value, key) {
+                data[key] = value;
+            });
+
+            // Mengirim data ke Apps Script
+            var url = 'https://script.google.com/macros/s/AKfycbzzXGMRfNZYaJPqkK4x6Y1nQcsyi6KLz8cWDKoNjj0PrgwFRkxboJE6aU4dkZd1Aim7Tw/exec';  // Ganti dengan URL deploy Apps Script Anda
+            var options = {
+                method: 'POST',
+                contentType: 'application/x-www-form-urlencoded',
+                payload: data
+            };
+
+            // Melakukan request ke backend
+            fetch(url, options)
+                .then(response => response.json())
+                .then(responseData => {
+                    if (responseData.result === 'success') {
+                        alert('Berhasil! Data telah ditambahkan.');
+                        // Menyembunyikan form atau reset ke form semula
+                        document.getElementById('myForm').reset();
+                    } else {
+                        alert('Terjadi kesalahan: ' + responseData.error);
+                    }
+                })
+                .catch(error => {
+                    alert('Error: ' + error.message);
+                });
+        }
+    </script>
 </head>
 
 <body style="background: rgb(0,50,126);
@@ -30,13 +66,14 @@ background: linear-gradient(135deg, rgba(0,50,126,1) 0%, rgba(118,64,255,1) 100%
         <div class="row d-flex justify-content-center align-items-center mx-1" style="height: 100vh;">
             <div class="col-md-5 border border-1 px-5 py-4 rounded-3" style="background-color: white;">
                 <div class="logo-DA d-flex align-items-center justify-content-center my-2">
-                    <img src="./370189821_620720850240874_5779720123140689958_n-Photoroom.png" alt="Logo Dewan Ambalan" class="img-fluid" style="width: 80px;">
+                    <img src="./370189821_620720850240874_5779720123140689958_n-Photoroom.png" alt="Logo Dewan Ambalan"
+                        class="img-fluid" style="width: 80px;">
                 </div>
                 <div class="mb-5 text-center">
                     <h4>ABSENSI DEWAN AMBALAN ESEMKASA</h4>
                 </div>
                 <form
-                    action="https://script.google.com/macros/s/AKfycbwbBnv6Eu-WgBg2vcry4s0hl848xcJCKEt0feYOJYOa1DD3tJsQ5tOY0XX8NWJ3TnRbLA/exec"
+                    action="https://script.google.com/macros/s/AKfycbzzXGMRfNZYaJPqkK4x6Y1nQcsyi6KLz8cWDKoNjj0PrgwFRkxboJE6aU4dkZd1Aim7Tw/exec"
                     method="POST">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInputNamaLengkap" placeholder="Nama Lengkap"
