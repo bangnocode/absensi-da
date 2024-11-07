@@ -38,16 +38,16 @@ background: linear-gradient(135deg, rgba(0,50,126,1) 0%, rgba(118,64,255,1) 100%
                 <div class="mb-5 text-center">
                     <h4>ABSENSI DEWAN AMBALAN ESEMKASA</h4>
                 </div>
-                <form onsubmit="handleSubmit(event)" method="POST" id="myForm">
+                <form name="submit-to-google-sheet" method="POST" id="myForm">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInputNamaLengkap" placeholder="Nama Lengkap"
                             name="Nama_Lengkap">
-                        <label for="floatingInputNamaLengkap">Nama Lengkap</label>
+                        <label for="floatingInputNamaLengkap">Nama Lengkap (Contoh : Fachrezy Centrino Duo)</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInputKelas" placeholder="Kelas"
                             name="Kelas">
-                        <label for="floatingInputKelas">Kelas</label>
+                        <label for="floatingInputKelas">Kelas (Contoh : XI PPLG 1)</label>
                     </div>
                     <label for="inputGroupSelectKeterangan">Keterangan</label>
                     <div class="input-group mb-3">
@@ -70,41 +70,16 @@ background: linear-gradient(135deg, rgba(0,50,126,1) 0%, rgba(118,64,255,1) 100%
         crossorigin="anonymous"></script>
 
     <script>
-        function handleSubmit(event) {
-            event.preventDefault();  // Mencegah form melakukan submit biasa
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzarnVR4eZzS7QGzGFZSI_hQNWC6iN3IaLbi_VSZsXAURND2tiMiQaMeFAJxOVQ7JEK/exec'
+        const form = document.forms['submit-to-google-sheet']
 
-            var formData = new FormData(form);
-            var data = new URLSearchParams();
-            formData.forEach(function (value, key) {
-                data.append(key, value);  // Menggunakan append untuk menambahkan key-value pair ke URLSearchParams
-            });
-
-
-            // Mengirim data ke Apps Script
-            var url = 'https://script.google.com/macros/s/AKfycbzzXGMRfNZYaJPqkK4x6Y1nQcsyi6KLz8cWDKoNjj0PrgwFRkxboJE6aU4dkZd1Aim7Tw/exec';  // Ganti dengan URL deploy Apps Script Anda
-            var options = {
-                method: 'POST',
-                contentType: 'application/x-www-form-urlencoded',
-                payload: data.toString()  // Pastikan data dikirim dalam format URL-encoded
-            };
-
-
-            // Melakukan request ke backend
-            fetch(url, options)
-                .then(response => response.json())
-                .then(responseData => {
-                    if (responseData.result === 'success') {
-                        alert('Berhasil! Data telah ditambahkan.');
-                        // Menyembunyikan form atau reset ke form semula
-                        document.getElementById('myForm').reset();
-                    } else {
-                        alert('Terjadi kesalahan: ' + responseData.error);
-                    }
-                })
-                .catch(error => {
-                    alert('Error: ' + error.message);
-                });
-        }
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => alert('Berhasil! Data telah ditambahkan.'),
+                form.reset())
+                .catch(error => console.error('Error!', error.message))
+        })
     </script>
 </body>
 
