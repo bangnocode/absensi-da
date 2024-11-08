@@ -4,14 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DA Esemkasa</title>
+    <title>DA Esemkasa - Formulir</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="icon" href="370189821_620720850240874_5779720123140689958_n-Photoroom.png">
 
     <style>
-
-        body{
+        body {
             overflow-x: hidden;
         }
 
@@ -26,14 +25,11 @@
         input[type=number] {
             -moz-appearance: textfield;
         }
-
     </style>
-
-
 </head>
 
-<body style="background: rgb(0,50,126);
-background: linear-gradient(135deg, rgba(0,50,126,1) 0%, rgba(118,64,255,1) 100%);">
+<body
+    style="background: rgb(0,50,126); background: linear-gradient(135deg, rgba(0,50,126,1) 0%, rgba(118,64,255,1) 100%);">
     <div class="container-fluid">
         <div class="row d-flex justify-content-center align-items-center mx-1" style="height: 100vh;">
             <div class="col-xl-5 border border-1 px-5 py-4 rounded-3" style="background-color: white;">
@@ -51,8 +47,8 @@ background: linear-gradient(135deg, rgba(0,50,126,1) 0%, rgba(118,64,255,1) 100%
                         <label for="floatingInputNamaLengkap">Nama Lengkap</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInputKelas" placeholder="Kelas"
-                            name="Kelas" required>
+                        <input type="text" class="form-control" id="floatingInputKelas" placeholder="Kelas" name="Kelas"
+                            required>
                         <label for="floatingInputKelas">Kelas (Contoh : XI PPLG 1)</label>
                     </div>
                     <label for="inputGroupSelectKeterangan">Keterangan</label>
@@ -67,26 +63,31 @@ background: linear-gradient(135deg, rgba(0,50,126,1) 0%, rgba(118,64,255,1) 100%
                         style="width: 100%; background-color: #0d6efd; border: 0px; height: 40px; border-radius: 5px; color: white; font-weight: bold; font-family: sans-serif;"
                         class="mb-3">
                 </form>
-                <a href="https://docs.google.com/spreadsheets/d/1UBqArIa_TJBBAsnPilebgmj63KA62qGuOTF235oAYzc/edit?usp=sharing" target="_blank">Link Spreadsheets</a>
+                <a href="https://docs.google.com/spreadsheets/d/1UBqArIa_TJBBAsnPilebgmj63KA62qGuOTF235oAYzc/edit?usp=sharing"
+                    target="_blank">Link Spreadsheets</a>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzarnVR4eZzS7QGzGFZSI_hQNWC6iN3IaLbi_VSZsXAURND2tiMiQaMeFAJxOVQ7JEK/exec'
-        const form = document.forms['submit-to-google-sheet']
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzarnVR4eZzS7QGzGFZSI_hQNWC6iN3IaLbi_VSZsXAURND2tiMiQaMeFAJxOVQ7JEK/exec';
+        const form = document.forms['submit-to-google-sheet'];
 
         form.addEventListener('submit', e => {
-            e.preventDefault()
+            e.preventDefault();
             fetch(scriptURL, { method: 'POST', body: new FormData(form) })
                 .then(response => alert('Berhasil! Data telah ditambahkan.'),
-                form.reset())
-                .catch(error => console.error('Error!', error.message))
-        })
+                    form.reset())
+                .catch(error => console.error('Error!', error.message));
+        });
+
+        // Cek token di sessionStorage
+        if (!sessionStorage.getItem("token")) {
+            // Jika tidak ada token, arahkan pengguna ke halaman index.html (halaman token)
+            window.location.href = "index.html";
+        }
+
+
     </script>
 </body>
 
