@@ -72,24 +72,35 @@
     <script>
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzarnVR4eZzS7QGzGFZSI_hQNWC6iN3IaLbi_VSZsXAURND2tiMiQaMeFAJxOVQ7JEK/exec';
         const form = document.forms['submit-to-google-sheet'];
-
-        form.addEventListener('submit', e => {
-            e.preventDefault();
+    
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();  // Mencegah form untuk submit default
+    
+            // Kirim data ke Google Apps Script
             fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-                .then(response => alert('Berhasil! Data telah ditambahkan.'),
-                    form.reset())
-                    window.location.href = "index.html"
-                .catch(error => console.error('Error!', error.message));
+                .then(response => {
+                    // Data berhasil dikirim
+                    form.reset(); // Reset form setelah pengiriman
+                    // Tampilkan pesan sukses
+                    alert('Berhasil! Data telah ditambahkan.');
+    
+                    // Setelah alert, arahkan ke halaman verifikasi token
+                    window.location.href = "index.html"; // Ganti dengan URL halaman verifikasi token Anda
+                })
+                .catch(error => {
+                    // Jika terjadi error saat pengiriman data
+                    console.error('Error!', error.message);
+                    alert('Terjadi kesalahan, silakan coba lagi!');
+                });
         });
-
+    
         // Cek token di sessionStorage
         if (!sessionStorage.getItem("token")) {
             // Jika tidak ada token, arahkan pengguna ke halaman index.html (halaman token)
             window.location.href = "index.html";
         }
-
-
     </script>
+    
 </body>
 
 </html>
