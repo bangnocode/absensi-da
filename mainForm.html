@@ -78,6 +78,7 @@
             fetch(scriptURL, { method: 'POST', body: new FormData(form) })
                 .then(response => alert('Berhasil! Data telah ditambahkan.'),
                     form.reset())
+                    window.location.href = "index.html"
                 .catch(error => console.error('Error!', error.message));
         });
 
